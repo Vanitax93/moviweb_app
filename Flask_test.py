@@ -1,5 +1,5 @@
 from flask import Flask
-from Interface import SQLiteDataManager, db, User, Movie
+from moviweb_app.datamanager.sqlite_data_manager import SQLiteDataManager
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
