@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Movie for {{ user.username }} - MovieWeb App</title>
+</head>
+<body>
+    <h1>Add Movie for {{ user.username }}</h1>
+    <p>Enter a movie title, and we'll try to fetch details automatically.</p>
+    <form method="POST">
+        <label for="title">Movie Title:</label><br>
+        <input type="text" id="title" name="title" required><br>
+        <label for="director">Director (optional):</label><br>
+        <input type="text" id="director" name="director"><br>
+        <label for="year">Year (optional):</label><br>
+        <input type="number" id="year" name="year"><br>
+        <label for="rating">Rating (optional, 0-10):</label><br>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="10"><br>
+        <button type="submit">Add Movie</button>
+    </form>
+    <p><a href="{{ url_for('user_movies', user_id=user.id) }}">Back to Movies</a></p>
+</body>
+</html>

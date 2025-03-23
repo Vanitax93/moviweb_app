@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies for {{ user.username }} - MovieWeb App</title>
+</head>
+<body>
+    <h1>{{ user.username }}'s Favorite Movies</h1>
+    {% if movies %}
+        <ul>
+            {% for movie in movies %}
+                <li>
+                    {{ movie.title }} ({{ movie.year }}) - Directed by {{ movie.director }} - Rating: {{ movie.rating }}
+                    <a href="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}">Edit</a>
+                    <a href="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movies yet!</p>
+    {% endif %}
+    <p><a href="{{ url_for('add_movie', user_id=user.id) }}">Add a Movie</a></p>
+    <p><a href="{{ url_for('list_users') }}">Back to Users</a></p>
+</body>
+</html>
