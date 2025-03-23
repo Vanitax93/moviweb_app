@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Movie_Project_Sqlalchemy.iml" filepath="$PROJECT_DIR$/.idea/Movie_Project_Sqlalchemy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/moviweb_app.iml" filepath="$PROJECT_DIR$/.idea/moviweb_app.iml" />
     </modules>
   </component>
 </project>
