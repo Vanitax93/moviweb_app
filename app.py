@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import requests
 from moviweb_app.datamanager.sqlite_data_manager import SQLiteDataManager, db, User, Movie, Review
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
@@ -192,4 +193,4 @@ if __name__ == '__main__':
         if not data_manager.get_all_users():
             user_id = data_manager.add_user("alice")
             data_manager.add_movie(user_id, "The Matrix", "Wachowski", 1999, 8.7, poster_url=None)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)), debug=False)
