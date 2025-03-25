@@ -16,6 +16,16 @@ class Movie(db.Model):
     poster_url = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
+    review_text = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Float, nullable=False)  # 0-10 scale
+
+    user = db.relationship('User', backref='reviews')
+    movie = db.relationship('Movie', backref='reviews')
+
 class SQLiteDataManager:
     def __init__(self, app):
         db.init_app(app)
@@ -65,3 +75,9 @@ class SQLiteDataManager:
         if user:
             db.session.delete(user)
             db.session.commit()
+
+    def add_review(self, user_id, movie_id, review_text, rating):
+        review = Review(user_id=user_id, movie_id=movie_id, review_text=review_text, rating=rating)
+        db.session.add(review)
+        db.session.commit()
+        return review.id

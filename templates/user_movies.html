@@ -25,6 +25,17 @@
                             Rating: {{ movie.rating }}<br>
                             <a href="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}">Edit</a>
                             <a href="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}">Delete</a>
+                            <a href="{{ url_for('add_review', user_id=user.id, movie_id=movie.id) }}" class="add-review-link">
+                                <span>Add</span><br><span>Review</span>
+                            </a>
+                            {% if movie.reviews %}
+                                <h3>Reviews:</h3>
+                                <ul>
+                                    {% for review in movie.reviews %}
+                                        <li>{{ review.review_text }} (Rating: {{ review.rating }}) by {{ review.user.username }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

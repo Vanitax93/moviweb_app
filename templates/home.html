@@ -1,35 +1,38 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Welcome to the MovieWeb App!{% endblock %}
+
+{% block nav %}
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('list_users') }}">Users</a>
+        <a href="{{ url_for('add_user') }}">Add User</a>
+    </nav>
+{% endblock %}
 
 {% block content %}
     <div class="container">
-        <div class="text-logo">MovieWeb</div>
-        <h1>Welcome to the MovieWeb App!</h1>
+        <h1 class="text-logo">MovieWeb App</h1>
         <p class="tagline">Dive into the Neon World of Movies!</p>
-
-        <!-- Play Music Prompt -->
-        <div id="play-music-prompt" style="display: none; text-align: center; margin-top: 20px;">
-            <p>Click to start the music!</p>
-            <button id="play-music-button" class="center-button">Play Music</button>
-        </div>
-
-        <!-- Featured Movies -->
+        <button id="play-music-button" class="center-button">Click to Start the Music!</button>
+        <h2>Featured Movies</h2>
         {% if featured_movies %}
-            <h2>Featured Movies</h2>
             <div class="movie-grid">
                 {% for movie in featured_movies %}
                     <div class="movie-item">
+                        {% if movie.poster_url %}
+                            <img src="{{ movie.poster_url }}" alt="{{ movie.title }} Poster" class="movie-poster">
+                        {% endif %}
                         <div>
-                            <a href="{{ url_for('user_movies', user_id=movie.user_id) }}">{{ movie.title }}</a>
-                            <p>Rating: {{ movie.rating }}/10</p>
-                            <p>Added by: {{ movie.user.username }}</p>
+                            <a href="{{ url_for('user_movies', user_id=movie.user_id) }}">{{ movie.title }}</a><br>
+                            Rating: {{ movie.rating }}/10<br>
+                            Added by: {{ movie.user.username }}
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p>No featured movies yet. Add some movies to get started!</p>
+            <p>No featured movies available.</p>
         {% endif %}
     </div>
 {% endblock %}

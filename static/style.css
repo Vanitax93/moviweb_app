@@ -5,6 +5,7 @@ html, body {
     padding: 0;
     cursor: url('/static/mouse.png'), auto; /* Custom cursor */
 }
+
 /* Font class */
 .press-start-2p-regular {
     font-family: "Press Start 2P", "Courier New", monospace;
@@ -150,27 +151,37 @@ ul li {
 
 /* Forms */
 form {
-    background-color: #4A4A4A;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker, more transparent */
     padding: 15px;
     border: 2px solid #00FFFF;
     margin: 20px 0;
+    box-shadow: 0 0 10px #00FFFF; /* Add neon glow */
 }
 
 label {
     display: block;
-    color: #00FF00;
+    color: #00FF00; /* Green to match other labels */
     margin-bottom: 5px;
+    text-shadow: 0 0 5px #00FF00; /* Add glow */
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+textarea {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    background-color: #2E2E2E;
-    border: 2px solid #00FF00;
-    color: #E0E0E0;
+    background-color: #2E2E2E; /* Dark background */
+    border: 2px solid #00FF00; /* Green border */
+    color: #E0E0E0; /* Light text */
     font-family: "Press Start 2P", "Courier New", monospace;
+    box-sizing: border-box; /* Ensure padding doesn’t affect width */
+    text-shadow: 0 0 5px #00FF00; /* Add glow to text */
+}
+
+textarea {
+    height: 100px; /* Set height for textarea */
+    resize: vertical; /* Allow vertical resizing only */
 }
 
 button {
@@ -179,11 +190,13 @@ button {
     padding: 10px 20px;
     border: 2px solid #000;
     font-family: "Press Start 2P", "Courier New", monospace;
+    box-shadow: 2px 2px #000, 0 0 10px #FF00FF; /* Add glow */
 }
 
 button:hover {
     background-color: #00FFFF;
     color: #000;
+    box-shadow: 2px 2px #000, 0 0 10px #00FFFF; /* Cyan glow on hover */
 }
 
 /* Center buttons */
@@ -280,23 +293,4 @@ button:hover {
         padding: 6px 12px;
         font-size: 10px;
     }
-}
-/* Loading Overlay */
-#loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #1a1a1a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensure it appears above all other content */
-}
-
-.loading-gif {
-    width: 100px;
-    height: 100px;
-    filter: drop-shadow(0 0 10px #FF00FF);
 }
