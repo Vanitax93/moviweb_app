@@ -1,12 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>MovieWeb App</title>
-</head>
-<body>
-    <h1>Welcome to MovieWeb App!</h1>
-    <p><a href="{{ url_for('list_users') }}">View All Users</a></p>
-    <p><a href="{{ url_for('add_user') }}">Add a New User</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="text-logo">MovieWeb</div>
+        <h1>Welcome to the MovieWeb App!</h1>
+        <p class="tagline">Dive into the Neon World of Movies!</p>
+
+        <!-- Play Music Prompt -->
+        <div id="play-music-prompt" style="display: none; text-align: center; margin-top: 20px;">
+            <p>Click to start the music!</p>
+            <button id="play-music-button" class="center-button">Play Music</button>
+        </div>
+
+        <!-- Featured Movies -->
+        {% if featured_movies %}
+            <h2>Featured Movies</h2>
+            <div class="movie-grid">
+                {% for movie in featured_movies %}
+                    <div class="movie-item">
+                        <div>
+                            <a href="{{ url_for('user_movies', user_id=movie.user_id) }}">{{ movie.title }}</a>
+                            <p>Rating: {{ movie.rating }}/10</p>
+                            <p>Added by: {{ movie.user.username }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No featured movies yet. Add some movies to get started!</p>
+        {% endif %}
+    </div>
+{% endblock %}

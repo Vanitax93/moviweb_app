@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Not Found{% endblock %}
+
+{% block nav %}
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container error">
+        <h1>404 - Page Not Found</h1>
+        <p>Sorry, we couldn’t find that!</p>
+    </div>
+{% endblock %}

@@ -1,25 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Movies for {{ user.username }} - MovieWeb App</title>
-</head>
-<body>
-    <h1>{{ user.username }}'s Favorite Movies</h1>
-    {% if movies %}
-        <ul>
-            {% for movie in movies %}
-                <li>
-                    {{ movie.title }} ({{ movie.year }}) - Directed by {{ movie.director }} - Rating: {{ movie.rating }}
-                    <a href="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}">Edit</a>
-                    <a href="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}">Delete</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No movies yet!</p>
-    {% endif %}
-    <p><a href="{{ url_for('add_movie', user_id=user.id) }}">Add a Movie</a></p>
-    <p><a href="{{ url_for('list_users') }}">Back to Users</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Movies for {{ user.username }}{% endblock %}
+
+{% block nav %}
+    <nav>
+        <a href="{{ url_for('list_users') }}">Users</a>
+        <a href="{{ url_for('add_movie', user_id=user.id) }}">Add Movie</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ user.username }}'s Favorite Movies</h1>
+        {% if movies %}
+            <div class="movie-grid">
+                {% for movie in movies %}
+                    <div class="movie-item">
+                        {% if movie.poster_url %}
+                            <img src="{{ movie.poster_url }}" alt="{{ movie.title }} Poster" class="movie-poster">
+                        {% endif %}
+                        <div>
+                            {{ movie.title }} ({{ movie.year }})<br>
+                            Directed by {{ movie.director }}<br>
+                            Rating: {{ movie.rating }}<br>
+                            <a href="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}">Edit</a>
+                            <a href="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}">Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No movies yet! Start adding some.</p>
+            <a href="{{ url_for('add_movie', user_id=user.id) }}"><button class="center-button">Add Your First Movie</button></a>
+        {% endif %}
+    </div>
+{% endblock %}

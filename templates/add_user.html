@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add User - MovieWeb App</title>
-</head>
-<body>
-    <h1>Add New User</h1>
-    <form method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <button type="submit">Add User</button>
-    </form>
-    <p><a href="{{ url_for('list_users') }}">Back to Users</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Add User{% endblock %}
+
+{% block nav %}
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('list_users') }}">Users</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Add New User</h1>
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+{% endblock %}

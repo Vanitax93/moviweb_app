@@ -1,29 +1,24 @@
 from flask_sqlalchemy import SQLAlchemy
-from moviweb_app.datamanager.data_manager_interface import DataManagerInterface
 
 db = SQLAlchemy()
 
-# Database Models
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), unique=True, nullable=False)
-    movies = db.relationship('Movie', backref='user', lazy=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    movies = db.relationship('Movie', backref='user', lazy=True, cascade="all, delete-orphan")
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     title = db.Column(db.String(120), nullable=False)
-    director = db.Column(db.String(80), nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-    rating = db.Column(db.Float, nullable=False)
+    director = db.Column(db.String(80))
+    year = db.Column(db.Integer)
+    rating = db.Column(db.Float)
+    poster_url = db.Column(db.String(200))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-# SQLite Implementation
-class SQLiteDataManager(DataManagerInterface):
+class SQLiteDataManager:
     def __init__(self, app):
         db.init_app(app)
-        # Create tables if they don't exist
-        with app.app_context():
-            db.create_all()
 
     def get_all_users(self):
         return User.query.all()
@@ -37,34 +32,36 @@ class SQLiteDataManager(DataManagerInterface):
         db.session.commit()
         return new_user.id
 
-    def add_movie(self, user_id, title, director, year, rating):
-        new_movie = Movie(
+    def add_movie(self, user_id, title, director, year, rating, poster_url=None):
+        movie = Movie(
             user_id=user_id,
             title=title,
             director=director,
             year=year,
-            rating=rating
+            rating=rating,
+            poster_url=poster_url
         )
-        db.session.add(new_movie)
+        db.session.add(movie)
         db.session.commit()
-        return new_movie.id
+        return movie.id
 
     def update_movie(self, movie_id, title, director, year, rating):
-        movie = Movie.query.get(movie_id)
+        movie = db.session.get(Movie, movie_id)
         if movie:
             movie.title = title
             movie.director = director
             movie.year = year
             movie.rating = rating
             db.session.commit()
-            return True
-        return False
 
     def delete_movie(self, movie_id):
-        movie = Movie.query.get(movie_id)
+        movie = db.session.get(Movie, movie_id)
         if movie:
             db.session.delete(movie)
             db.session.commit()
-            return True
-        return False
 
+    def delete_user(self, user_id):
+        user = db.session.get(User, user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()

@@ -1,17 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Users - MovieWeb App</title>
-</head>
-<body>
-    <h1>Users</h1>
-    <ul>
-        {% for user in users %}
-            <li><a href="{{ url_for('user_movies', user_id=user.id) }}">{{ user.username }}</a></li>
-        {% endfor %}
-    </ul>
-    <p><a href="{{ url_for('add_user') }}">Add New User</a></p>
-    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block nav %}
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('add_user') }}">Add User</a>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Users</h1>
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{{ url_for('user_movies', user_id=user.id) }}">{{ user.username }}</a>
+                    <a href="{{ url_for('delete_user', user_id=user.id) }}" class="delete" onclick="return confirm('Are you sure you want to delete {{ user.username }}? This will also delete all their movies.');">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
