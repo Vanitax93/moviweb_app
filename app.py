@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import requests
 from moviweb_app.datamanager.sqlite_data_manager import SQLiteDataManager, db, User, Movie, Review
 import os
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
